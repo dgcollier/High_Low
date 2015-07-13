@@ -3,18 +3,30 @@
 $play = 1;
 $i = 0;
 $best = 0;
+$floor;
+$ceiling;
+$gameLength;
 
-$floor = (intval($argv[1]));
-$ceiling = (intval($argv[2]));
+if ($argc >= 3) {
+    $floor = intval($argv[1]);
+    $ceiling = intval($argv[2]);
+    $gameLength = intval((($ceiling - $floor) / 10) + 1);
+    echo "Game Length is $gameLength";
+} else {
+    $floor = 1;
+    $ceiling = 100;
+    $gameLength = 7;
+}
 
 do {
+
 
     $rand = rand($floor, $ceiling);
     fwrite(STDOUT, "Guess a number between {$floor} and {$ceiling}:" . PHP_EOL);
 
     $userGuess = intval(fgets(STDIN));
 
-    while ($i <= 7 && $userGuess) {
+    while ($i <= $gameLength && $userGuess) {
 
         $i++;
         
@@ -45,11 +57,13 @@ do {
                 echo "Your best score is still {$best}. Play again to beat it!\n";
             } else {
                 "You tied your best score of {$best} turns! Good job.\n";
+                $userGuess = 0;
             }
 
-            $userGuess = 0;
-        } else if ($i == 7) {
-            echo 'You ran out of turns.';
+        }
+
+        if ($i == ($gameLength -1)) {
+            echo 'You ran out of turns.' . PHP_EOL;
             $userGuess = 0;
         }
     }
