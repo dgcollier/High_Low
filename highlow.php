@@ -18,7 +18,7 @@ echo "Game Length: $gameLength turns." . PHP_EOL;
 do {
 
     $rand = mt_rand($floor, $ceiling);
-    echo $rand . PHP_EOL;
+    // echo $rand . PHP_EOL;
     fwrite(STDOUT, "Guess a number between {$floor} and {$ceiling}:" . PHP_EOL);
 
     $userGuess = intval(fgets(STDIN));
