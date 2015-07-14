@@ -25,7 +25,6 @@ do {
 
     while ($userGuess) {
     
-        
         if ($i == ($gameLength + 1)) {
             echo 'You ran out of turns.' . PHP_EOL;
             $userGuess = 0;
