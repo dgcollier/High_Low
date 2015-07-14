@@ -3,25 +3,20 @@
 $play = 1;
 $i = 0;
 $best = 0;
-$floor;
-$ceiling;
-$gameLength;
+$floor = 1;
+$ceiling = 100;
+$gameLength = 7;
 
 if ($argc >= 3) {
     $floor = intval($argv[1]);
     $ceiling = intval($argv[2]);
     $gameLength = intval((($ceiling - $floor) / 10) + 1);
-    echo "Game Length is $gameLength";
-} else {
-    $floor = 1;
-    $ceiling = 100;
-    $gameLength = 7;
+    echo "Game Length is $gameLength turns." . PHP_EOL;
 }
 
 do {
 
-
-    $rand = rand($floor, $ceiling);
+    $rand = mt_rand($floor, $ceiling);
     fwrite(STDOUT, "Guess a number between {$floor} and {$ceiling}:" . PHP_EOL);
 
     $userGuess = intval(fgets(STDIN));
@@ -31,7 +26,7 @@ do {
         $i++;
         
         if ($userGuess < $floor || $userGuess > $ceiling) {
-            fwrite(STDOUT, "Keep it between {$floor} and {$ceiling}:\n");
+            fwrite(STDOUT, "Keep it between {$floor} and {$ceiling}:" . PHP_EOL);
             $userGuess = intval(fgets(STDIN));
         }
 
@@ -48,18 +43,18 @@ do {
 
             if ($best == 0) {
                 $best = $i;
-                echo "You guessed right in {$i} turns!\n";
+                echo "You guessed right in {$i} turns!" . PHP_EOL;
             } else if ($best > $i) {
                 $best = $i;
-                echo "You set a new best score! You guessed right in {$i} turns!\n";
+                echo "You set a new best score! You guessed right in {$i} turns!" . PHP_EOL;
             } else if ($best < $i) {
-                echo "You guessed right in {$i} turns!\n";
-                echo "Your best score is still {$best}. Play again to beat it!\n";
+                echo "You guessed right in {$i} turns!" . PHP_EOL;
+                echo "Your best score is still {$best}. Play again to beat it!" . PHP_EOL;
             } else {
-                "You tied your best score of {$best} turns! Good job.\n";
-                $userGuess = 0;
+                echo "You tied your best score of {$best} turns! Good job." . PHP_EOL;
             }
-
+            
+            $userGuess = 0;
         }
 
         if ($i == ($gameLength -1)) {
