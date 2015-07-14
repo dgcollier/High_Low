@@ -4,16 +4,23 @@ $play = 1;
 $i = 0;
 $best = 0;
 $floor = 1;
-$ceiling = 100;
-$gameLength = 7;
+$ceiling = 1000;
+$gameLength = 15;
+$user = 0;
 
 if ($argc >= 3) {
     $floor = intval($argv[1]);
     $ceiling = intval($argv[2]);
-    $gameLength = intval((($ceiling - $floor) / 10) + 1);
+    $user = $argv[3];
+    $gameLength = intval((($ceiling - $floor) / 100) + 10);
 }
 
-echo "Game Length: $gameLength turns." . PHP_EOL;
+do {
+    fwrite(STDOUT, "What is your name?" . PHP_EOL);
+    $user = trim(fgets(STDIN));
+} while (is_int($user));
+
+echo "Thanks for playing {$user}! You will have {$gameLength} turns to guess the number. Good luck!" . PHP_EOL;
 
 do {
 
@@ -26,7 +33,7 @@ do {
     while ($userGuess) {
     
         if ($i == ($gameLength + 1)) {
-            echo 'You ran out of turns.' . PHP_EOL;
+            echo "Sorry, {$user}. You ran out of turns." . PHP_EOL;
             $userGuess = 0;
         } else if ($userGuess < $floor || $userGuess > $ceiling) {
             fwrite(STDOUT, "Keep it between {$floor} and {$ceiling}:" . PHP_EOL);
@@ -40,7 +47,7 @@ do {
             fwrite(STDOUT, 'Guess again:' . PHP_EOL);
             $userGuess = intval(fgets(STDIN));
         } else if ($userGuess == $rand) {
-            echo 'YOU WIN!!!' . PHP_EOL;
+            echo "{$user} WINS!!!" . PHP_EOL;
             $i++;
 
             if ($best == 0) {
@@ -70,7 +77,7 @@ do {
         echo 'Awesome sauce!' . PHP_EOL;
         $i = 0;
     } else {
-        echo "Lame. :(" . PHP_EOL;
+        echo "I'm disappointed in you {$user} :(" . PHP_EOL;
         $play = 0;
     }
 } while ($play);
